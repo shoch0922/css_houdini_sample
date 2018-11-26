@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>CSS Houdini Sample</title>
+	<style>
+		.houdini {
+			width: 80vw;
+			height: 65vh;
+			margin: 0 auto;
+			background-image: paint(ellipse);
+			--ellipse-radi: 20;
+		}
+	</style>
+</head>
+<body>
+	<div class="houdini"></div>
+	<script>
+		//workletの登録
+		CSS.paintWorklet.addModule('worklet.js');
+
+		window.addEventListener('DOMContentLoaded', () => {
+			const el = document.querySelector('.houdini');
+			tick();
+
+			function tick() {
+				const r = Math.random() * 5;
+				// CSS変数を更新
+				el.style.setProperty('--ellipse-radi', r);
+
+				requestAnimationFrame(tick);
+			}
+		});
+	</script>
+</body>
+</html>
