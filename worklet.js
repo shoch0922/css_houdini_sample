@@ -24,4 +24,4 @@ class SamplePainter {
 	}
 }
 
-registerPaint('ellipse', SamplePainter);
+registerPaint('rect', SamplePainter);
