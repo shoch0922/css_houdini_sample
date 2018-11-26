@@ -6,29 +6,73 @@
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
 	<title>CSS Houdini Sample</title>
 	<style>
-		.houdini {
+		*{
+			margin: 0;
+			padding: 0;
+			box-sizing: border-box;
+		}
+		ul {
+			perspective: 1800px;
 			width: 80vw;
-			height: 65vh;
-			margin: 0 auto;
+			height: 40vh;
+			margin: 40px auto;
+			display: flex;
+			justify-content: space-between;
+
+		}
+		li {
+			width: 100%;
+			list-style: none;
+			padding: 20px;
+			margin: 10px;
+			color: #fff;
+		}
+		li:hover {
+			cursor: pointer;
+		}
+		.houdini {
 			background-image: paint(ellipse);
-			--ellipse-radi: 20;
+			--rect-color: blue;
+			transition: .4s all;
+		}
+		.houdini:hover {
+			transform: rotate3d(1,-1,0, -15deg);
 		}
 	</style>
 </head>
 <body>
-	<div class="houdini"></div>
+	<ul>
+		<li class="houdini">
+			<h2>記事タイトル</h2>
+		</li>
+		<li class="houdini">
+			<h2>記事タイトル</h2>
+		</li>
+		<li class="houdini">
+			<h2>記事タイトル</h2>
+		</li>
+	</ul>
 	<script>
 		//workletの登録
 		CSS.paintWorklet.addModule('worklet.js');
 
 		window.addEventListener('DOMContentLoaded', () => {
-			const el = document.querySelector('.houdini');
-			tick();
+			const el = document.querySelectorAll('.houdini');
+			let hue = [];
+			for(let i=0; i < el.length; i++) {
+				hue[i] = Math.round(Math.random() * 360);
+			}
 
+			tick();
 			function tick() {
-				const r = Math.random() * 5;
-				// CSS変数を更新
-				el.style.setProperty('--ellipse-radi', r);
+				el.forEach((val, i) => {
+					if(hue[i]<= 360) {
+						hue[i]++;
+					} else {
+						hue[i] = 0;
+					}
+					val.style.setProperty('--rect-color', `hsl(${hue[i]}, 100%, 50%)`);
+				});
 
 				requestAnimationFrame(tick);
 			}

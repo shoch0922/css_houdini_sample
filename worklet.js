@@ -1,25 +1,26 @@
 class SamplePainter {
 	static get inputProperties() {
 		return [
-			'--ellipse-radi',
+			'--rect-color',
 		];
 	}
 
 	paint(ctx, geo, props) {
-		const r = props.get('--ellipse-radi');
-		const color = '#f8e6db';
+		const round = 100;
+		const color = props.get('--rect-color').toString();
 
-		for (let i = 0; i < geo.width; i ++) {
-			let x = i * 10;
-			let y = 50;
-			let radi = Math.random() * r;
-			ctx.beginPath();
-			ctx.arc(x, y, radi, 0, Math.PI * 2, false);
-			ctx.closePath();
+		ctx.beginPath();
 
-			ctx.fillStyle = color;
-			ctx.fill();
-		}
+		ctx.moveTo(0, 0);
+		ctx.lineTo(0, 0);
+		ctx.lineTo(geo.width - round, 0);
+		ctx.lineTo(geo.width, round);
+		ctx.lineTo(geo.width, geo.height);
+		ctx.lineTo(0, geo.height);
+		ctx.closePath();
+
+		ctx.fillStyle = color;
+		ctx.fill();
 	}
 }
 
