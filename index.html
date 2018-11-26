@@ -31,7 +31,7 @@
 			cursor: pointer;
 		}
 		.houdini {
-			background-image: paint(ellipse);
+			background-image: paint(rect);
 			--rect-color: blue;
 			transition: .4s all;
 		}
@@ -51,7 +51,7 @@
 		<li class="houdini">
 			<h2>記事タイトル</h2>
 		</li>
-	</ul>
+	</ul>　
 	<script>
 		//workletの登録
 		CSS.paintWorklet.addModule('worklet.js');
